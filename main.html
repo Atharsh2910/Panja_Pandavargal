@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Page - Web App</title>
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(45deg, #086ef3, #21b5d8);
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo h1 {
+            margin-bottom: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin-top: 20px;
+            padding-left: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f9c74f;
+        }
+
+        /* Main content styling */
+        main {
+            padding: 60px 20px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        main .intro h2 {
+            font-size: 2.8rem;
+            color: #000000;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        main .intro p {
+            font-size: 1.1rem;
+            color: #555555;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        main ul {
+            text-align: left;
+            list-style-type: disc;
+            margin-left: 30px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        main ul li {
+            margin-bottom: 12px;
+        }
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            background-color: #086ef3;
+            color: #fff;
+            padding: 1.5rem;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            main .intro h2 {
+                font-size: 2rem;
+            }
+
+            nav ul li {
+                margin-right: 15px;
+            }
+
+            main {
+                padding: 40px 15px;
+            }
+
+            main ul {
+                margin-left: 20px;
+            }
+
+            footer {
+                padding: 1rem;
+            }
+        }
+
+        /* Login Modal styles */
+        .login-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #086ef3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #21b5d8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Bharath Healthcare Doctor Dashboard</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="main.html">Home</a></li>
+                <li><a href="http://localhost:3000">Page 1</a></li>
+                <li><a href="http://localhost:3000/search_by_details.html">Page 2</a></li>
+                <li><a href="http://localhost:3000/search.html">Page 3</a></li>
+                <li><a href="http://localhost:3000/appointments.html">Page 4</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit="return validateLogin()">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginError" style="color: red; display: none;">Invalid credentials, please try again.</p>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="mainContent" style="display:none;">
+        <section class="intro">
+            <h2>Welcome to the Rural Healthcare Assistant Web App</h2>
+            <p>Our web app is designed to bridge the gap in healthcare for rural communities by providing a simple, efficient platform for rural doctors to manage patient records, appointments, and communication with patients—all while operating on low bandwidth and across platforms.</p>
+            
+            <b><p style="text-align: justify;">This solution allows a single doctor to:</p></b>
+            <ul>
+                <li>Keep track of patient histories and treatment progress.</li>
+                <li>Receive regular alerts for patient visits and appointments.</li>
+                <li>Reschedule appointments with ease when necessary.</li>
+                <li>Access the app from multiple devices with secure credentials.</li>
+            </ul>
+            
+            <b><p style="text-align: justify">For patients, the app makes healthcare more accessible:</p></b>
+            <ul>
+                <li>Book appointments with a single click.</li>
+                <li>Receive appointment reminders and alerts.</li>
+                <li>Send emergency messages to the doctor.</li>
+                <li>View their appointment schedules and health records.</li>
+            </ul>
+            
+            <p>With our solution, doctors can monitor changes in patient health and provide timely treatment based on real-time data. This ensures that healthcare in rural areas becomes more efficient, responsive, and patient-centered.</p>
+            
+            <p>Our goal is to empower rural doctors to deliver better healthcare, while ensuring patients have a direct, easy way to access care when they need it most.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Bharath Healthcare. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Check if the user is already logged in
+        window.onload = function() {
+            // If logged in already, show main content
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                // If not logged in, show login modal
+                document.getElementById('loginContainer').style.display = 'flex';
+            }
+        };
+
+        // Validate login credentials
+        function validateLogin() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            // Example credentials (you should replace these with real authentication logic)
+            if ((username === 'doctor' && password === 'password123') || 
+                (username === 'patient' && password === 'password123')) {
+                // Store session data to remember login status
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('role', username); // Store user role
+                
+                // Hide login modal and show main content
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+
+                // Redirect based on role
+                if (username === 'doctor') {
+                    window.location.href = 'main.html';  // Redirect to doctor's dashboard
+                } else if (username === 'patient') {
+                    window.location.href = 'patientmain.html';  // Redirect to patient's dashboard
+                }
+                
+                return false; // Prevent form submission
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</body>
+</html>

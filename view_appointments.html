@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Upcoming Appointments</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            background: linear-gradient(60deg, #086ef3, #21b5d8);
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: white;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        /* Button Styling */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Appointments Section Styling */
+        #appointments-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        #appointments-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #appointments-list li {
+            padding: 12px;
+            margin-bottom: 12px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #4CAF50;
+            font-size: 1rem;
+            text-align: left;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsive Design for Smaller Screens */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>View Your Upcoming Appointments</h2>
+    <form id="appointments-form">
+        <div class="form-group">
+            <label for="patientId">Patient ID</label>
+            <input type="text" id="patientId" name="patientId" required placeholder="Enter your Patient ID">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email address">
+        </div>
+        <button type="submit" class="btn">View Appointments</button>
+    </form>
+
+    <div id="appointments-container">
+        <h3>Your Upcoming Appointments:</h3>
+        <ul id="appointments-list"></ul>
+    </div>
+
+    <!-- Loading Message -->
+    <div id="loading" class="loading" style="display: none;">Loading appointments...</div>
+</div>
+
+<script>
+    document.getElementById('appointments-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const patientId = document.getElementById('patientId').value;
+        const email = document.getElementById('email').value;
+        const loading = document.getElementById('loading');
+        const container = document.getElementById('appointments-container');
+        const list = document.getElementById('appointments-list');
+        const form = document.getElementById('appointments-form');
+
+        // Show loading state
+        loading.style.display = 'block';
+        container.style.display = 'none';
+        list.innerHTML = '';
+
+        // Send GET request to the server to fetch appointments based on patientId and email
+        fetch(`http://localhost:3000/appointments/upcoming/${patientId}/${email}`)
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                container.style.display = 'block';
+
+                if (data.length === 0) {
+                    list.innerHTML = '<li>No upcoming appointments found.</li>';
+                } else {
+                    data.forEach(appointment => {
+                        // Extract only the date (assuming the appointment_date is in a format like 'YYYY-MM-DDTHH:MM:SS')
+                        const appointmentDate = new Date(appointment.appointment_date);
+                        const dateString = appointmentDate.toLocaleDateString(); // This gives you a human-readable date string, e.g., 'MM/DD/YYYY'
+
+                        const li = document.createElement('li');
+                        li.textContent = `Appointment Date: ${dateString}`;
+                        list.appendChild(li);
+                    });
+                }
+            })
+            .catch(err => {
+                loading.style.display = 'none';
+                alert('Error fetching appointments');
+                console.error(err);
+            });
+    });
+</script>
+
+</body>
+</html>

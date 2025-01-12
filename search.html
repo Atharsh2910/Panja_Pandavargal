@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Patient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            background: linear-gradient(60deg, #086ef3, #21b5d8);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color:#f9f9f9;
+        }
+
+        form {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        form input, form button {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #f9f9f9;
+        }
+
+        #result {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            form input, form button {
+                font-size: 14px;
+            }
+
+            table th, table td {
+                font-size: 12px;
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Patient</h1>
+    <form id="searchForm">
+        <label for="patientId">Enter Patient ID:</label>
+        <input type="number" id="patientId" name="patientId" placeholder="Patient ID">
+        <button type="button" onclick="searchPatient()">Search</button>
+    </form>
+
+    <h2>Search Result</h2>
+    <div id="result"></div>
+
+    <script>
+        const resultContainer = document.getElementById('result');
+
+        function searchPatient() {
+            const patientId = document.getElementById('patientId').value;
+
+            if (!patientId.trim()) {
+                resultContainer.innerHTML = '<p>Please enter a valid Patient ID.</p>';
+                return;
+            }
+
+            fetch(`/search_patient/${patientId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        resultContainer.innerHTML = `<p>${data.message}</p>`;
+                    } else {
+                        displayPatientDetails(data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultContainer.innerHTML = '<p>Error fetching data. Please try again.</p>';
+                });
+        }
+
+        function displayPatientDetails(patient) {
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Date of Birth</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Emergency Contact</th>
+                        <th>Diagnoses</th>
+                        <th>Treatment Plans</th>
+                        <th>Prescriptions</th>
+                        <th>Upcoming Appointments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>${patient.full_name || 'N/A'}</td>
+                        <td>${patient.dob || 'N/A'}</td>
+                        <td>${patient.address || 'N/A'}</td>
+                        <td>${patient.phone_number || 'N/A'}</td>
+                        <td>${patient.email || 'N/A'}</td>
+                        <td>${patient.gender || 'N/A'}</td>
+                        <td>${patient.contact_name || 'N/A'} (${patient.relationship || 'N/A'})</td>
+                        <td>${patient.diagnoses || 'N/A'}</td>
+                        <td>${patient.treatment_plans || 'N/A'}</td>
+                        <td>${patient.prescriptions || 'N/A'}</td>
+                        <td>${patient.appointments && patient.appointments.length > 0
+                            ? patient.appointments.join(', ')
+                            : 'N/A'}</td>
+                    </tr>
+                </tbody>
+            `;
+
+            resultContainer.innerHTML = '';
+            resultContainer.appendChild(table);
+        }
+    </script>
+</body>
+</html>

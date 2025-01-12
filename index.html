@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Data Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(60deg, #086ef3, #21b5d8);
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: linear-gradient(0deg, #ffffff, #ffffff);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 20px); /* Adjust for padding */
+    
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .date-input-group {
+            margin-bottom: 10px;
+        }
+
+        .date-input-group input {
+            width: 80%;
+        }
+
+        .remove-date-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .remove-date-btn:hover {
+            background-color: #e53935;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .checkbox-inline {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .checkbox-inline label {
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        input:enabled, textarea:enabled {
+            background-color: #e0f7fa;
+        }
+
+        input:disabled, textarea:disabled {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;color:#ffffff">Patient Data Collection</h1>
+
+    <form id="patientForm">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <div class="checkbox-inline">
+            <label for="hasPastMedicalConditions">Past Medical Conditions:</label>
+            <input type="checkbox" id="hasPastMedicalConditions" onclick="toggleCheckboxVisibility(this, 'pastMedicalConditions')">
+        </div>
+        <textarea id="pastMedicalConditions" name="pastMedicalConditions" disabled></textarea>
+
+        <div class="checkbox-inline">
+            <label for="hasSurgicalHistory">Surgical History:</label>
+            <input type="checkbox" id="hasSurgicalHistory" onclick="toggleCheckboxVisibility(this, 'surgicalHistory')">
+        </div>
+        <textarea id="surgicalHistory" name="surgicalHistory" disabled></textarea>
+
+        <div class="checkbox-inline">
+            <label for="hasAllergies">Allergies:</label>
+            <input type="checkbox" id="hasAllergies" onclick="toggleCheckboxVisibility(this, 'allergies')">
+        </div>
+        <textarea id="allergies" name="allergies" disabled></textarea>
+
+        <div class="checkbox-inline">
+            <label for="hasCurrentMedications">Current Medications:</label>
+            <input type="checkbox" id="hasCurrentMedications" onclick="toggleCheckboxVisibility(this, 'currentMedications')">
+        </div>
+        <textarea id="currentMedications" name="currentMedications" disabled></textarea>
+
+        <label for="familyMedicalHistory">Family Medical History:</label>
+        <textarea id="familyMedicalHistory" name="familyMedicalHistory" required></textarea>
+
+        <label for="datesOfVisits">Date of Visit:</label>
+        <input 
+            type="date" 
+            id="datesOfVisits" 
+            name="datesOfVisits" 
+            required 
+            readonly
+        >
+
+
+        <label for="upcomingAppointmentDates">Upcoming Appointment Dates:</label>
+        <div id="upcomingAppointmentDatesContainer">
+            <div class="date-input-group">
+                <input type="date" name="upcomingAppointmentDates[]" required>
+                <button type="button" class="remove-date-btn" onclick="removeDateField(this)">Remove</button>
+            </div>
+        </div>
+        <button type="button" onclick="addUpcomingAppointmentDateField()">Add Another Appointment Date</button>
+
+        <label for="diagnoses">Diagnoses:</label>
+        <textarea id="diagnoses" name="diagnoses" required></textarea>
+
+        <label for="treatmentPlans">Treatment Plans:</label>
+        <textarea id="treatmentPlans" name="treatmentPlans" required></textarea>
+
+        <label for="prescriptions">Prescriptions:</label>
+        <textarea id="prescriptions" name="prescriptions" required></textarea>
+
+        <label for="emergencyContactName">Emergency Contact Name:</label>
+        <input type="text" id="emergencyContactName" name="emergencyContactName" required>
+
+        <label for="emergencyContactRelationship">Relationship to Patient:</label>
+        <input type="text" id="emergencyContactRelationship" name="emergencyContactRelationship" required>
+
+        <label for="emergencyContactPhoneNumber">Emergency Contact Phone Number:</label>
+        <input type="tel" id="emergencyContactPhoneNumber" name="emergencyContactPhoneNumber" required>
+
+        <label for="appointmentReminders">Appointment Reminders:</label>
+        <textarea id="appointmentReminders" name="appointmentReminders" required></textarea>
+
+        <label for="doctorNotes">Doctor's Notes:</label>
+        <textarea id="doctorNotes" name="doctorNotes" required></textarea>
+
+        <label for="observationsDuringVisits">Observations During Visits:</label>
+        <textarea id="observationsDuringVisits" name="observationsDuringVisits" required></textarea>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        // Pre-fill the current date in the "Dates of Visits" field
+        document.addEventListener("DOMContentLoaded", () => {
+            const dateOfVisitInput = document.getElementById('datesOfVisits');
+            const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            dateOfVisitInput.value = today;
+        });
+
+        function submitForm() {
+            const form = document.getElementById('patientForm');
+            const formData = new FormData(form);
+
+            fetch('http://localhost:3000/submit_form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return Promise.reject('Failed to submit form');
+                }
+            })
+            .then(data => {
+                alert(data.message);  // Show a success message
+                location.reload();     // Reload the page after successful submission
+            })
+            .catch(error => {
+                console.error('Error:', error);  // Log any error if submission fails
+            });
+        }
+
+
+        function addDateField() {
+            const container = document.getElementById('datesOfVisitsContainer');
+            const field = `
+                <div class="date-input-group">
+                    <input type="date" name="datesOfVisits[]" required>
+                    <button type="button" class="remove-date-btn" onclick="removeDateField(this)">Remove</button>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', field);
+        }
+
+        function addUpcomingAppointmentDateField() {
+            const container = document.getElementById('upcomingAppointmentDatesContainer');
+            const field = `
+                <div class="date-input-group">
+                    <input type="date" name="upcomingAppointmentDates[]" required>
+                    <button type="button" class="remove-date-btn" onclick="removeDateField(this)">Remove</button>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', field);
+        }
+
+        function removeDateField(button) {
+            const container = button.parentElement;
+            container.remove();
+        }
+
+        function toggleCheckboxVisibility(checkbox, targetId) {
+            const input = document.getElementById(targetId);
+            input.disabled = !checkbox.checked;
+        }
+    </script>
+</body>
+</html>

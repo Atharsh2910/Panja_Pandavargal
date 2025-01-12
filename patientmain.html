@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Page - Web App</title>
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(45deg, #086ef3, #21b5d8);
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo h1 {
+            margin-bottom: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin-top: 20px;
+            padding-left: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f9c74f;
+        }
+
+        /* Main content styling */
+        main {
+            padding: 60px 20px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        main .intro h2 {
+            font-size: 2.8rem;
+            color: #000000;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        main .intro p {
+            font-size: 1.1rem;
+            color: #555555;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        main ul {
+            text-align: left;
+            list-style-type: disc;
+            margin-left: 30px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        main ul li {
+            margin-bottom: 12px;
+        }
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            background-color: #086ef3;
+            color: #fff;
+            padding: 1.5rem;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            main .intro h2 {
+                font-size: 2rem;
+            }
+
+            nav ul li {
+                margin-right: 15px;
+            }
+
+            main {
+                padding: 40px 15px;
+            }
+
+            main ul {
+                margin-left: 20px;
+            }
+
+            footer {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Bharath Healthcare Patient Dashboard</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="patientmain.html">Home</a></li>
+                <li><a href="file:///C:/Users/WIN/check/public/view_appointments.html">Page 1</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Welcome to the Rural Healthcare Assistant Web App</h2>
+            <p>Our web app is designed to bridge the gap in healthcare for rural communities by providing a simple, efficient platform for rural doctors to manage patient records, appointments, and communication with patients—all while operating on low bandwidth and across platforms.</p>
+            
+            <b><p style="text-align: justify;">This solution allows a single doctor to:</p></b>
+            <ul>
+                <li>Keep track of patient histories and treatment progress.</li>
+                <li>Receive regular alerts for patient visits and appointments.</li>
+                <li>Reschedule appointments with ease when necessary.</li>
+                <li>Access the app from multiple devices with secure credentials.</li>
+            </ul>
+            
+            <b><p style="text-align: justify">For patients, the app makes healthcare more accessible:</p></b>
+            <ul>
+                <li>Book appointments with a single click.</li>
+                <li>Receive appointment reminders and alerts.</li>
+                <li>Send emergency messages to the doctor.</li>
+                <li>View their appointment schedules and health records.</li>
+            </ul>
+            
+            <p>With our solution, doctors can monitor changes in patient health and provide timely treatment based on real-time data. This ensures that healthcare in rural areas becomes more efficient, responsive, and patient-centered.</p>
+            
+            <p>Our goal is to empower rural doctors to deliver better healthcare, while ensuring patients have a direct, easy way to access care when they need it most.</p>
+        </section>
+    </main>
+    
+
+    <footer>
+        <p>&copy; 2025 Bharath Healthcare. All rights reserved.</p>
+    </footer>
+</body>
+</html>
